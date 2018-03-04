@@ -1,5 +1,7 @@
 require "bundler/setup"
 require "kinesis"
+require "yaml"
+require "pry-byebug"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

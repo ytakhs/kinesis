@@ -14,14 +14,18 @@ module Kinesis
         @crumbs      = crumbs
         @ref         = ref
         @current_key = crumbs.pop
-        @parent      = crumbs.inject(root) { |crumb, ref_key| tree[crumb] }
+        @parent      = crumbs.inject(root) { |tree, crumb| tree[crumb] }
       end
 
       private
 
       def trace(keys, object)
         keys.inject(object) do |tree, key|
-          tree[key]
+          if tree.is_a?(Array)
+            tree[key.to_i]
+          else
+            tree.fetch(key) { |key| tree[key.to_sym] }
+          end
         end
       end
     end

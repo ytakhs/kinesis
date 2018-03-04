@@ -1,11 +1,18 @@
 require "spec_helper"
 
 RSpec.describe Kinesis do
-  it "has a version number" do
-    expect(Kinesis::VERSION).not_to be nil
-  end
+  describe ".resolve" do
+    let(:index_yaml) { YAML.load_file(File.expand_path("../schema/index.yml", __FILE__)) }
+    let(:post_yaml) { YAML.load_file(File.expand_path("../schema/post.yml", __FILE__)) }
 
-  it "does something useful" do
-    expect(false).to eq(true)
+    subject { Kinesis.resolve(index_yaml, File.expand_path("../schema", __FILE__)) }
+
+    describe "local refenrece" do
+      it { expect(subject.dig("paths", "/users", "get")).to eq index_yaml.dig("get") }
+    end
+
+    describe "remote reference" do
+      it { expect(subject.dig("paths", "/users", "post")).to eq post_yaml }
+    end
   end
 end

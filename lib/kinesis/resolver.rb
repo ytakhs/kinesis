@@ -4,7 +4,7 @@ module Kinesis
 
     def initialize(root, base_dir)
       @root = root
-      @base_dir = File.expand_path(".")
+      @base_dir = base_dir
     end
 
     def resolve(current = root, crumbs = [])
@@ -18,7 +18,7 @@ module Kinesis
     private
 
     def resolve_hash(current, crumbs)
-      if (ref = current.fetch("$ref", false))
+      if (ref = current.delete("$ref"))
         if ref.start_with?("#")
           resolve_local(current, crumbs, ref)
         elsif ref.start_with?("http")
@@ -40,15 +40,15 @@ module Kinesis
     end
 
     def resolve_local(current, crumbs, ref)
-      Resolvers::Local.new(root: root, crumbs: crumbs, ref: ref).resolve
+      Resolvers::Local.new(root: root, current: current, crumbs: crumbs, ref: ref).resolve
     end
 
     def resolve_remote(current, crumbs, ref)
-      Resolvers::Remote.new(root: root, crumbs: crumbs, ref: ref, base_dir: base_dir).resolve
+      Resolvers::Remote.new(root: root, current: current, crumbs: crumbs, ref: ref, base_dir: base_dir).resolve
     end
 
     def resolve_url(current, crumbs, ref)
-      Resolvers::Url.new(root: root, crumbs: crumbs, ref: ref).resolve
+      Resolvers::Url.new(root: root, current: current, crumbs: crumbs, ref: ref).resolve
     end
   end
 end
