@@ -1,5 +1,5 @@
-require "yaml"
 require "kinesis/resolver"
+require "kinesis/resolvers/base"
 require "kinesis/resolvers/local"
 require "kinesis/resolvers/remote"
 require "kinesis/resolvers/url"
