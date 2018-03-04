@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["YUJI takahashi"]
   spec.email         = ["jit.y.31@gmail.com"]
 
-  spec.summary       = ""
-  spec.description   = ""
+  spec.summary       = "An implementation of JSON Reference and JSON Pointer written in Ruby."
+  spec.description   = "Kinesis is an implementation of JSON Reference and JSON Pointer."
   spec.homepage      = "https://github.com/jit-y/kinesis"
   spec.license       = "MIT"
 
