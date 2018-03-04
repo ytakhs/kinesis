@@ -4,7 +4,6 @@ module Kinesis
       def resolve
         ref_keys = ref.gsub(/^#\//, "").split(/\//)
         ref_value = trace(ref_keys, root)
-        target = crumbs.inject(root) { |crumb, ref_key| tree[crumb] }
 
         parent[current_key] = ref_value
       end
